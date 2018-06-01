@@ -1,7 +1,48 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp2.0</TargetFramework>
+    <Configurations>Debug;Release;net40_debug;net40_release</Configurations>
   </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)'=='Debug'">
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+    <Optimize>false</Optimize>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)'=='Release'">
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+    <Optimize>true</Optimize>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)'=='net40_debug'">
+    <TargetFramework>net40</TargetFramework>
+    <Optimize>false</Optimize>
+  </PropertyGroup>
+  
+  <PropertyGroup Condition="'$(Configuration)'=='net40_release'">
+    <TargetFramework>net40</TargetFramework>
+    <Optimize>true</Optimize>
+  </PropertyGroup>
+  
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='net40_debug|AnyCPU'">
+    <DefineConstants>DEBUG;TRACE;NET40_DEBUG;NET40</DefineConstants>
+    <OutputPath>bin\Debug\</OutputPath>
+  </PropertyGroup>
+  
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='net40_release|AnyCPU'">
+    <OutputPath>bin\Release</OutputPath>
+  </PropertyGroup>
+
+  <ItemGroup Condition="'$(TargetFramework)'=='net40'">
+    <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
+  </ItemGroup>
+
+
+  <ItemGroup Condition="'$(TargetFramework)'=='netcoreapp2.0'">
+       <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
+  </ItemGroup>
+
+
+
 
 </Project>
