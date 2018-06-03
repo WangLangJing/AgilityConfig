@@ -1,0 +1,10 @@
+﻿{
+  "ConfigurableItems": [
+    {
+      "Name": "主业务配置",
+      "Path": ".\\Sample.config.json",
+      "Type": "AgilityConfig.Tool,AgilityConfig.Tool.SampleConfig",
+      "IsEncrypted": false
+    }
+  ]
+}

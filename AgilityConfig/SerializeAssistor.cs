@@ -7,24 +7,27 @@ namespace AgilityConfig
 {
     public static class SerializeAssistor
     {
+        static JsonSerializerSettings _Settings;
+        static SerializeAssistor()
+        {
+            _Settings = new JsonSerializerSettings();
+            _Settings.NullValueHandling = NullValueHandling.Ignore;
+            _Settings.DateFormatString = "yyyy-MM-dd HH:mm:ss";
+        }
         /// <summary>
         /// 将指定对象序列化为字符串
         /// </summary>
         /// <param name="obj"></param>
         /// <returns></returns>
-        public static String Serialize(Object obj)
+        public static String Serialize(Object obj,Type type)
         {
-            return JsonConvert.SerializeObject(obj);
+     
+            return JsonConvert.SerializeObject(obj, type, _Settings);
         }
-        /// <summary>
-        /// 将指定字符串反列化为 <see cref="ConfigBaseObject"/> 派生类的实例
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="str"></param>
-        /// <returns></returns>
-        public static T Deserialize<T>(String str) where T : ConfigBaseObject
+        public static Object Deserialize(String str,Type type) 
         {
-            return JsonConvert.DeserializeObject<T>(str);
+            return JsonConvert.DeserializeObject(str, type, _Settings);
         }
+
     }
 }
