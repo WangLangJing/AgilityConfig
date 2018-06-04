@@ -38,8 +38,9 @@ namespace AgilityConfig.Tool
         private void _tvConfigCatalog_NodeMouseClick(Object sender, TreeNodeMouseClickEventArgs e)
         {
             this._btnSave.Enabled = false;
+
             var item = e.Node.Tag as ConfigurableItem;
-            Object configObj = AgilityConfig.LoadConfig(item.type, item.Path,item.IsEncrypted);
+            Object configObj = AgilityConfig.LoadConfig(item.type, item.Path, item.IsEncrypted);
             TypeInstanceWrapper wrapper = new TypeInstanceWrapper(configObj);
             this._propGrids.SelectedObject = wrapper;
         }
@@ -63,6 +64,16 @@ namespace AgilityConfig.Tool
                 catch { }
 
             }
+        }
+        public void ShowTipInfo(String tipInfo, Color? foreColor = null)
+        {
+            Color color = this.ForeColor;
+            this._labelTip.Text = tipInfo;
+            if (foreColor.HasValue)
+            {
+                color = foreColor.Value;
+            }
+            this._labelTip.ForeColor = color;
         }
         private Type GetConfigType(String typeStr)
         {
@@ -105,14 +116,18 @@ namespace AgilityConfig.Tool
                 ConfigurableItem item = this._tvConfigCatalog.SelectedNode.Tag as ConfigurableItem;
                 var config = wrapper.Instance as ConfigBase;
                 config.Save(item.Path, item.IsEncrypted);
+                this.ShowTipInfo("已保存当前配置");
             }
             catch (Exception exc)
             {
-                MessageBox.Show("配置保存失败！" + exc.Message, "提示",MessageBoxButtons.OK,MessageBoxIcon.Error);
+                this.ShowTipInfo("配置保存失败！", Color.Red);
+                MessageBox.Show("配置保存失败！" + exc.Message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
             }
         }
         private void _propGrids_PropertyValueChanged(Object s, PropertyValueChangedEventArgs e)
         {
+            this.ShowTipInfo(String.Empty);
             this._btnSave.Enabled = true;
         }
     }
