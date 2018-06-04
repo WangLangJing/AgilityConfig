@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Reflection;
 using System.ComponentModel;
-using AgilityConfig;
 
-namespace AgilityConfig.Tool
+
+namespace AgilityConfig
 {
     public class TypeInstanceWrapper : CustomTypeDescriptor
     {
@@ -61,12 +61,6 @@ namespace AgilityConfig.Tool
                                 displayAttribute,
                                 descriptionAttribute,
                                 });
-                if (propdesc.PropertyType.BaseType == typeof(ConfigBase))
-                {
-                    TypeConverterAttribute converterAttribute = new TypeConverterAttribute(typeof(ExpandableObjectConverter));
-                    constAttributes.Add(converterAttribute);
-                }
-
 
                 var prop = TypeDescriptor.CreateProperty(_instanceType, propdesc.Name, propdesc.PropertyType, constAttributes.ToArray());
                 descList.Add(prop);

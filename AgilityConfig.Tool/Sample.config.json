@@ -1,6 +1,6 @@
 ﻿{
   "Name": "d2xq",
-  "Children": { "Name": "调整" },
+  "Childrens": { "Name": "调整" },
   "Classes": [ "高三八班", "计算机科学与技术2班" ],
   "DateTime": "2018-06-04 00:13:07",
   "TimeOut": "00:00:00",

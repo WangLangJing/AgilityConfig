@@ -13,7 +13,7 @@ namespace AgilityConfig.Tool
 
 
         [ConfigTag(Name = "子配置", Description = "子类配置", IsFindable = true,Category = "测试")]
-        public SampleConfig2 Children { get; set; }
+        public SampleConfig2 Childrens { get; set; }
 
         [ConfigTag(Name = "可配置班级", Description = "所有可配置班级的名称", IsFindable = true, Category = "测试")]
         public String[] Classes { get; set; }
@@ -33,7 +33,7 @@ namespace AgilityConfig.Tool
   
     public class SampleConfig2:ConfigBase
     {
-        [ConfigTag(Name = "名称", Description = "ceshi ", IsFindable = true, Category = "测试")]
+        [ConfigTag(Name = "名称", Description = "测试 ", IsFindable = true, Category = "测试")]
         public String Name { get; set; }
     }
 }

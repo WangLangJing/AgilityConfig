@@ -41,8 +41,7 @@ namespace AgilityConfig.Tool
 
             var item = e.Node.Tag as ConfigurableItem;
             Object configObj = AgilityConfig.LoadConfig(item.type, item.Path, item.IsEncrypted);
-            TypeInstanceWrapper wrapper = new TypeInstanceWrapper(configObj);
-            this._propGrids.SelectedObject = wrapper;
+            this._propGrids.SelectedObject = configObj;
         }
 
         private void BuildConfigurableItemTreeView(IEnumerable<ConfigurableItem> items)
@@ -112,9 +111,8 @@ namespace AgilityConfig.Tool
         {
             try
             {
-                var wrapper = this._propGrids.SelectedObject as TypeInstanceWrapper;
                 ConfigurableItem item = this._tvConfigCatalog.SelectedNode.Tag as ConfigurableItem;
-                var config = wrapper.Instance as ConfigBase;
+                var config = this._propGrids.SelectedObject as ConfigBase;
                 config.Save(item.Path, item.IsEncrypted);
                 this.ShowTipInfo("已保存当前配置");
             }

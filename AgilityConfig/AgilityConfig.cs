@@ -48,7 +48,6 @@ namespace AgilityConfig
         /// <summary>
         /// 从指定路径加载配置对象
         /// </summary>
-        /// <typeparam name="T"></typeparam>
         /// <param name="filePath"></param>
         /// <param name="isEncrypted">表示文件是否被加密</param>
         /// <returns></returns>
@@ -57,6 +56,13 @@ namespace AgilityConfig
             Object target = TypeInfoProvider.CreateInstance(type);
             LoadConfigToObject(target, type, filePath, isEncrypted);
             return target;
+        }
+        public static T LoadConfig<T>( String filePath, Boolean isEncrypted = false) where T: ConfigBase
+        {
+            Type type = typeof(T);
+            Object target = TypeInfoProvider.CreateInstance(typeof(T));
+            LoadConfigToObject(target, type, filePath, isEncrypted);
+            return target as T;
         }
         /// <summary>
         /// 将配置对象保存到指定路径
