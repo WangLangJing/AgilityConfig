@@ -20,7 +20,7 @@ namespace AgilityConfig
             var text = File.ReadAllText(filePath, _DefaultEncodeing);
             if (isEncrypted)
             {
-                text = StringEncryptor.Decrypt(text);
+                text = DefaultStringEncryptor.Decrypt(text);
             }
             target = SerializeAssistor.Deserialize(text, type);
 
@@ -28,19 +28,64 @@ namespace AgilityConfig
 
             foreach (var prop in propertyInfos)
             {
-                var configTag = TypeInfoProvider.GetConfigTag(prop);
-                if (configTag != null)
+                ConfigLoadPropertyAnalysis(target, prop);
+            }
+            CopyConfigObject(target, obj, type);
+        }
+        private static void CopyConfigObject(Object source, Object dest, Type type)
+        {
+            var propertyInfos = TypeInfoProvider.GetProperties(type);
+
+            foreach (var prop in propertyInfos)
+            {
+                Object value = TypeInfoProvider.GetValue(prop, source);
+                TypeInfoProvider.SetValue(prop, dest, value);
+            }
+        }
+        private static void ConfigLoadPropertyAnalysis(Object target, PropertyInfo prop)
+        {
+            var configTag = TypeInfoProvider.GetConfigTag(prop);
+            if (configTag != null)
+            {
+                Object value = TypeInfoProvider.GetValue(prop, target);
+                if (configTag.IsEncrypted && value != null && prop.PropertyType == typeof(String))
                 {
-                    Object value = TypeInfoProvider.GetValue(prop, target);
-                    if (configTag.IsEncrypted && value != null && prop.PropertyType == typeof(String))
+                    String strValue = value as String;
+                    strValue = DefaultStringEncryptor.Decrypt(strValue);
+                    TypeInfoProvider.SetValue(prop, target, strValue);
+                    return;
+                }
+                if (prop.PropertyType.BaseType == typeof(ConfigBase))
+                {
+                    Type type = prop.PropertyType;
+                    var propertyInfos = TypeInfoProvider.GetProperties(type);
+                    foreach (var cprop in propertyInfos)
                     {
-                        String strValue = value as String;
-                        strValue = StringEncryptor.Decrypt(strValue);
-                        TypeInfoProvider.SetValue(prop, obj, strValue);
+                        ConfigLoadPropertyAnalysis(value, cprop);
                     }
-                    else
+                }
+            }
+        }
+        private static void ConfiSavePropertyAnalysis(Object target, PropertyInfo prop)
+        {
+            var configTag = TypeInfoProvider.GetConfigTag(prop);
+            if (configTag != null)
+            {
+                Object value = TypeInfoProvider.GetValue(prop, target);
+                if (configTag.IsEncrypted && value != null && prop.PropertyType == typeof(String))
+                {
+                    String strValue = value as String;
+                    strValue = DefaultStringEncryptor.Encrypt(strValue);
+                    TypeInfoProvider.SetValue(prop, target, strValue);
+                    return;
+                }
+                if (prop.PropertyType.BaseType == typeof(ConfigBase))
+                {
+                    Type type = prop.PropertyType;
+                    var propertyInfos = TypeInfoProvider.GetProperties(type);
+                    foreach (var cprop in propertyInfos)
                     {
-                        TypeInfoProvider.SetValue(prop, obj, value);
+                        ConfiSavePropertyAnalysis(value, cprop);
                     }
                 }
             }
@@ -48,7 +93,6 @@ namespace AgilityConfig
         /// <summary>
         /// 从指定路径加载配置对象
         /// </summary>
-        /// <typeparam name="T"></typeparam>
         /// <param name="filePath"></param>
         /// <param name="isEncrypted">表示文件是否被加密</param>
         /// <returns></returns>
@@ -57,6 +101,13 @@ namespace AgilityConfig
             Object target = TypeInfoProvider.CreateInstance(type);
             LoadConfigToObject(target, type, filePath, isEncrypted);
             return target;
+        }
+        public static T LoadConfig<T>(String filePath, Boolean isEncrypted = false) where T : ConfigBase
+        {
+            Type type = typeof(T);
+            Object target = TypeInfoProvider.CreateInstance(typeof(T));
+            LoadConfigToObject(target, type, filePath, isEncrypted);
+            return target as T;
         }
         /// <summary>
         /// 将配置对象保存到指定路径
@@ -68,33 +119,21 @@ namespace AgilityConfig
         {
 
             Object target = obj;
-            Object cloenTarget = Activator.CreateInstance(type);
+            Object cloneTarget = Activator.CreateInstance(type);
+            CopyConfigObject(target, cloneTarget, type);
+
             var propertyInfos = TypeInfoProvider.GetProperties(type);
 
             foreach (var prop in propertyInfos)
             {
-                var configTag = TypeInfoProvider.GetConfigTag(prop);
-                if (configTag != null)
-                {
-                    Object value = TypeInfoProvider.GetValue(prop, target);
-                    if (configTag.IsEncrypted && value != null && prop.PropertyType == typeof(String))
-                    {
-                        String strValue = value as String;
-                        strValue = StringEncryptor.Encrypt(strValue);
-                        TypeInfoProvider.SetValue(prop, cloenTarget, strValue);
-                    }
-                    else
-                    {
-                        TypeInfoProvider.SetValue(prop, cloenTarget, value);
-                    }
-                
-                }
+                ConfiSavePropertyAnalysis(cloneTarget, prop);
+
             }
 
-            var text = SerializeAssistor.Serialize(cloenTarget, type);
+            var text = SerializeAssistor.Serialize(cloneTarget, type);
             if (isEncrypt)
             {
-                text = StringEncryptor.Decrypt(text);
+                text = DefaultStringEncryptor.Decrypt(text);
             }
             File.WriteAllText(savePath, text, _DefaultEncodeing);
 

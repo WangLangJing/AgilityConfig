@@ -10,9 +10,9 @@ namespace AgilityConfig
     {
         public static Object CreateInstance(Type type)
         {
-#if NET40
+
             return Activator.CreateInstance(type);
-#endif
+
         }
         public static IEnumerable<PropertyInfo> GetProperties(Type type)
         {
@@ -24,7 +24,7 @@ namespace AgilityConfig
             info.SetValue(target, value, null);
 #endif
 #if NETCOREAPP2_0
-            info.SetValue(target, value,);
+            info.SetValue(target, value);
 #endif
         }
         public static Object GetValue(PropertyInfo info, Object target)

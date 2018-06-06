@@ -8,7 +8,7 @@ namespace AgilityConfig
     /// <summary>
     /// 提供对字符串简单的加解密功能(使用base64)
     /// </summary>
-    public sealed class StringEncryptor
+    public sealed class DefaultStringEncryptor
     {
         /// <summary>
         /// 对原始字符串进行简单加密
