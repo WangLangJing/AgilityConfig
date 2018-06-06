@@ -32,6 +32,7 @@
             this._propGrids = new System.Windows.Forms.PropertyGrid();
             this._tvConfigCatalog = new System.Windows.Forms.TreeView();
             this._btnSave = new System.Windows.Forms.Button();
+            this._labelTip = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // _propGrids
@@ -48,7 +49,7 @@
             // 
             this._tvConfigCatalog.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
-            this._tvConfigCatalog.Location = new System.Drawing.Point(12, 12);
+            this._tvConfigCatalog.Location = new System.Drawing.Point(12, 13);
             this._tvConfigCatalog.Name = "_tvConfigCatalog";
             this._tvConfigCatalog.Size = new System.Drawing.Size(278, 630);
             this._tvConfigCatalog.TabIndex = 1;
@@ -64,11 +65,21 @@
             this._btnSave.UseVisualStyleBackColor = true;
             this._btnSave.Click += new System.EventHandler(this._btnSave_Click);
             // 
+            // _labelTip
+            // 
+            this._labelTip.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this._labelTip.AutoSize = true;
+            this._labelTip.Location = new System.Drawing.Point(304, 626);
+            this._labelTip.Name = "_labelTip";
+            this._labelTip.Size = new System.Drawing.Size(0, 17);
+            this._labelTip.TabIndex = 3;
+            // 
             // MainForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(782, 654);
+            this.Controls.Add(this._labelTip);
             this.Controls.Add(this._btnSave);
             this.Controls.Add(this._tvConfigCatalog);
             this.Controls.Add(this._propGrids);
@@ -78,6 +89,7 @@
             this.Name = "MainForm";
             this.Text = "管理现有配置";
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -86,6 +98,7 @@
         private System.Windows.Forms.PropertyGrid _propGrids;
         private System.Windows.Forms.TreeView _tvConfigCatalog;
         private System.Windows.Forms.Button _btnSave;
+        private System.Windows.Forms.Label _labelTip;
     }
 }
 
