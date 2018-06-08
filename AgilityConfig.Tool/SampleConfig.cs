@@ -35,5 +35,7 @@ namespace AgilityConfig.Tool
     {
         [ConfigTag(Name = "名称", Description = "测试 ", IsFindable = true, Category = "测试")]
         public String Name { get; set; }
+        [ConfigTag(Name = "密码", Description = "加密密码 ", IsFindable = true, Category = "测试",IsEncrypted =true)]
+        public String Password { get; set; }
     }
 }
