@@ -5,7 +5,7 @@ using System.Text;
 using System.ComponentModel;
 namespace AgilityConfig
 {
- [TypeConverterAttribute(typeof(SerializableExpandableObjectConverter))]
+    [TypeConverterAttribute(typeof(SerializableExpandableObjectConverter))]
     public abstract class ConfigBase : ICustomTypeDescriptor
     {
         private TypeInstanceWrapper _typeInstanceWrapper;
