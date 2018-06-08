@@ -29,7 +29,7 @@ namespace AgilityConfig
         public Boolean IsFindable { get; set; }
 
         /// <summary>
-        /// 表示此标签的值是否需要加密，只能作用于 <see cref="String"/> 类型，附加目标为类时无效
+        /// 表示此标签的值是否需要加密，只能作用于 <see cref="String"/> 类型，附加目标为其他类型时无效
         /// </summary>
         public Boolean IsEncrypted { get; set; }
     }
