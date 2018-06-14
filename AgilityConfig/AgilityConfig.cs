@@ -8,6 +8,11 @@ namespace AgilityConfig
 {
     public class AgilityConfig
     {
+        /// <summary>
+        /// 表示当前配置系统是否处于UI设计的状态
+        /// </summary>
+        public static Boolean IsUIDesign { get; set; }
+
         static Encoding _DefaultEncodeing;
         static AgilityConfig()
         {
@@ -55,7 +60,7 @@ namespace AgilityConfig
                     TypeInfoProvider.SetValue(prop, target, strValue);
                     return;
                 }
-                if (prop.PropertyType.BaseType == typeof(ConfigBase))
+                if (prop.PropertyType.IsSubclassOf(typeof(ConfigBase)))
                 {
                     Type type = prop.PropertyType;
                     var propertyInfos = TypeInfoProvider.GetProperties(type);
@@ -79,7 +84,7 @@ namespace AgilityConfig
                     TypeInfoProvider.SetValue(prop, target, strValue);
                     return;
                 }
-                if (prop.PropertyType.BaseType == typeof(ConfigBase))
+                if (prop.PropertyType.IsSubclassOf(typeof(ConfigBase)))
                 {
                     Object valueCopy = TypeInfoProvider.CreateInstance(prop.PropertyType);
                     CopyConfigObject(value, valueCopy, prop.PropertyType);

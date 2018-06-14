@@ -1,5 +1,7 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Windows.Forms;
 
@@ -7,6 +9,7 @@ namespace AgilityConfig.Tool
 {
     static class Program
     {
+
         /// <summary>
         /// 应用程序的主入口点。
         /// </summary>
@@ -16,6 +19,12 @@ namespace AgilityConfig.Tool
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new MainForm());
+
+      
+
+
+         
+
         }
     }
 }

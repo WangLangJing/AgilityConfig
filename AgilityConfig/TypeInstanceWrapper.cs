@@ -5,15 +5,18 @@ using System.Text;
 using System.Reflection;
 using System.ComponentModel;
 
-
+using System.Drawing.Design;
 namespace AgilityConfig
 {
     public class TypeInstanceWrapper : CustomTypeDescriptor
     {
-        public Object Instance { get
+        public Object Instance
+        {
+            get
             {
                 return _instance;
-            } }
+            }
+        }
         private Type _instanceType;
         private Object _instance;
         public TypeInstanceWrapper(Object instance) : base(TypeDescriptor.GetProvider(instance).GetTypeDescriptor(instance))
@@ -41,8 +44,8 @@ namespace AgilityConfig
 
                 String displayName = configTag.Name;
                 if (String.IsNullOrEmpty(displayName)) displayName = propdesc.DisplayName;
-            
-               displayAttribute = new DisplayNameAttribute(displayName);
+
+                displayAttribute = new DisplayNameAttribute(displayName);
 
                 browsableAttribute = new BrowsableAttribute(configTag.IsFindable);
 
@@ -61,7 +64,14 @@ namespace AgilityConfig
                                 displayAttribute,
                                 descriptionAttribute,
                                 });
-
+                if (AgilityConfig.IsUIDesign)
+                {
+                    EditorAttribute editor = this.GetEditorAttribute(configTag.UIEditor);
+                    if (editor != null)
+                    {
+                        constAttributes.Add(editor);
+                    }
+                }
                 var prop = TypeDescriptor.CreateProperty(_instanceType, propdesc.Name, propdesc.PropertyType, constAttributes.ToArray());
                 descList.Add(prop);
             }
@@ -70,7 +80,16 @@ namespace AgilityConfig
             return descCollection;
         }
 
-
+        public EditorAttribute GetEditorAttribute(String uiEditorString)
+        {
+            EditorAttribute editor = null;
+            if (!String.IsNullOrEmpty(uiEditorString))
+            {
+               // editor = new EditorAttribute(uiEditorString, "System.Drawing.Design.UITypeEditor,System.Drawing");
+                editor = new EditorAttribute(uiEditorString, typeof(UITypeEditor));
+            }
+            return editor;
+        }
         public override PropertyDescriptorCollection GetProperties()
         {
             return this.GetProperties(null);

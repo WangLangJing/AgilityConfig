@@ -3,7 +3,7 @@
     {
       "Name": "主业务配置",
       "Path": ".\\Sample.config.json",
-      "Type": "AgilityConfig.Tool,AgilityConfig.Tool.SampleConfig",
+      "Type": "AgilityConfig.Tool.SampleConfig,AgilityConfig.Tool",
       "IsEncrypted": false
     }
   ]

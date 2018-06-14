@@ -29,6 +29,11 @@ namespace AgilityConfig
         public Boolean IsFindable { get; set; }
 
         /// <summary>
+        /// 在管理工具中针对此配置属性使用的编辑类, 格式： 类型所在程序集名称 ,类型全称 ，例如  test,test.test1.UIeditor
+        /// </summary>
+        public String UIEditor { get; set; }
+
+        /// <summary>
         /// 表示此标签的值是否需要加密，只能作用于 <see cref="String"/> 类型，附加目标为其他类型时无效
         /// </summary>
         public Boolean IsEncrypted { get; set; }

@@ -9,6 +9,7 @@ using System.Windows.Forms;
 using System.IO;
 using System.Reflection;
 
+
 namespace AgilityConfig.Tool
 {
     public partial class MainForm : Form
@@ -25,8 +26,8 @@ namespace AgilityConfig.Tool
             AgilityConfigToolConfig config = new AgilityConfigToolConfig();
             String configPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "AgilityConfig.Tool.config.json");
             config.Load(configPath, false);
-
-            var items = config.ConfigurableItems;
+            AgilityConfig.IsUIDesign = true;
+           var items = config.ConfigurableItems;
             if (items != null && items.Length > 0)
             {
                 this.BuildConfigurableItemTreeView(items);
@@ -48,10 +49,11 @@ namespace AgilityConfig.Tool
         {
             foreach (var item in items)
             {
+                if (!File.Exists(item.Path)) continue;
                 Type type = null;
                 try
                 {
-                    type = this.GetConfigType(item.Type);
+                    type = TypeInfoProvider.GetType(item.Type);
                     if (type == null) continue;
                     item.type = type;
                     TreeNode node = new TreeNode();
@@ -74,33 +76,7 @@ namespace AgilityConfig.Tool
             }
             this._labelTip.ForeColor = color;
         }
-        private Type GetConfigType(String typeStr)
-        {
-            String[] splitInfo = typeStr.Split(',');
-            Type type = null;
-            if (splitInfo.Length == 2)
-            {
-                String assemblyFileName = splitInfo[0];
-                if (!assemblyFileName.EndsWith(".dll") && !assemblyFileName.EndsWith(".exe"))
-                {
-                    String temp = assemblyFileName + ".exe";
-                    if (File.Exists(temp))
-                    {
-                        assemblyFileName = temp;
-                    }
-                    else
-                    {
-                        assemblyFileName = ".dll";
-                    }
-                }
-                String assemblyPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, assemblyFileName);
-                String typeName = splitInfo[1];
 
-                var assembly = Assembly.LoadFrom(assemblyPath);
-                type = assembly.GetType(typeName);
-            }
-            return type;
-        }
 
         private void _btnSave_Click(Object sender, EventArgs e)
         {
@@ -128,5 +104,8 @@ namespace AgilityConfig.Tool
             this.ShowTipInfo(String.Empty);
             this._btnSave.Enabled = true;
         }
+
+     
+
     }
 }
