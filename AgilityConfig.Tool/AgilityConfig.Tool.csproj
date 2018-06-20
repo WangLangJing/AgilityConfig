@@ -56,11 +56,6 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SampleConfig.cs" />
-    <Compile Include="SQLServerConnectionEditor.cs" />
-    <Compile Include="SQLServerConnectionStringForm.cs" />
-    <Compile Include="SQLServerConnectionStringForm.Designer.cs">
-      <DependentUpon>SQLServerConnectionStringForm.cs</DependentUpon>
-    </Compile>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -73,9 +68,6 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="SQLServerConnectionStringForm.resx">
-      <DependentUpon>SQLServerConnectionStringForm.cs</DependentUpon>
-    </EmbeddedResource>
     <None Include="AgilityConfig.Tool.config.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
