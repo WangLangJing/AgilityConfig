@@ -8,6 +8,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documents", "Documents", "{DA4D525F-8A58-47EB-A8B1-842E1A3C1647}"
 	ProjectSection(SolutionItems) = preProject
 		_ReadMe.md = _ReadMe.md
+		config.gif = config.gif
 		LICENSE = LICENSE
 	EndProjectSection
 EndProject
