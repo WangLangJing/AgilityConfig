@@ -7,9 +7,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AgilityConfig", "AgilityCon
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documents", "Documents", "{DA4D525F-8A58-47EB-A8B1-842E1A3C1647}"
 	ProjectSection(SolutionItems) = preProject
-		_ReadMe.md = _ReadMe.md
 		config.gif = config.gif
 		LICENSE = LICENSE
+		README.md = README.md
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AgilityConfig.Tool", "AgilityConfig.Tool\AgilityConfig.Tool.csproj", "{07BA1710-54FC-44B1-96C4-73983E29404C}"
